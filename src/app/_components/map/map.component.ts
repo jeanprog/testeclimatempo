@@ -15,12 +15,13 @@ export class MapComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     // Inicializa o mapa com coordenadas padrão (0, 0)
-    this.mapService.initMap(0, 0, 'map');
+    this.mapService.initMap(-23.5489, -46.6388, 'map');
   }
 
   ngOnChanges(): void {
     // Se as coordenadas mudaram, atualize o mapa
     if (this.lat && this.lon) {
+      console.log(this.lat, this.lon);
       this.mapService.updateMap(parseFloat(this.lat), parseFloat(this.lon));
     }
   }
