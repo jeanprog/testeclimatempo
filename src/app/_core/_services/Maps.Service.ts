@@ -57,6 +57,7 @@ export class MapService {
       attribution:
         '&copy; <a href="https://openweathermap.org/city">OpenWeatherMap</a>',
       maxZoom: 19,
+      opacity: 0.8,
     }).addTo(this.map);
   }
 }

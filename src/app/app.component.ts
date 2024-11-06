@@ -8,11 +8,18 @@ import { MapComponent } from './_components/map/map.component';
 import { FormsModule } from '@angular/forms';
 import { CitySuggestion } from './_domain/_entities/CitySuggestion.entity';
 import { NgFor } from '@angular/common';
+import { CardweatherComponent } from './_components/cardweather/cardweather.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MapComponent, FormsModule, NgFor],
+  imports: [
+    RouterOutlet,
+    MapComponent,
+    FormsModule,
+    NgFor,
+    CardweatherComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })

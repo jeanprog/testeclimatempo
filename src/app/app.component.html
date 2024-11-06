@@ -1,26 +1,31 @@
-<div class="container mx-auto p-4">
-  <h1 class="text-center text-2xl font-semibold">Mapa de Localização</h1>
+<body class="bg-slate-900 min-h-screen">
+  <div class="container mx-auto p-4 flex flex-col gap-2">
+    <h1 class="text-center text-2xl font-semibold text-white">
+      Veja o clima na sua cidade?
+    </h1>
 
-  <input
-    [(ngModel)]="city"
-    placeholder="Cidade"
-    class="p-2 border rounded"
-    (input)="onCityInputChange()"
-  />
-  @if(this.suggestions.length > 0) {
-  <ul class="suggestions-list">
-    <li
-      *ngFor="let suggestion of suggestions"
-      (click)="onCitySelected(suggestion)"
-    >
-      {{ suggestion.name }} - {{ suggestion.state }}, {{ suggestion.country }}
-    </li>
-  </ul>
-  }
-  <!-- <button (click)="changeCity()" class="bg-blue-500 text-white p-2 rounded">
-    Buscar
-  </button> -->
+    <input
+      [(ngModel)]="city"
+      placeholder="Cidade"
+      class="p-2 rounded bg-slate-800"
+      (input)="onCityInputChange()"
+    />
+    @if(this.suggestions.length > 0) {
+    <ul class="suggestions-list">
+      <li
+        *ngFor="let suggestion of suggestions"
+        (click)="onCitySelected(suggestion)"
+      >
+        {{ suggestion.name }} - {{ suggestion.state }}, {{ suggestion.country }}
+      </li>
+    </ul>
+    }
+    <!-- <button (click)="changeCity()" class="bg-blue-500 text-white p-2 rounded">
+      Buscar
+    </button> -->
+    <cardweather></cardweather>
 
-  <!-- Componente de Mapa -->
-  <app-map [lat]="lat" [lon]="lon"></app-map>
-</div>
+    <!-- Componente de Mapa -->
+    <app-map [lat]="lat" [lon]="lon"></app-map>
+  </div>
+</body>
