@@ -6,11 +6,13 @@ import { Weather } from './_domain/_entities/weather.entity';
 import { City } from './_domain/_entities/City.entity';
 import { MapComponent } from './_components/map/map.component';
 import { FormsModule } from '@angular/forms';
+import { CitySuggestion } from './_domain/_entities/CitySuggestion.entity';
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MapComponent, FormsModule],
+  imports: [RouterOutlet, MapComponent, FormsModule, NgFor],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -19,22 +21,45 @@ export class AppComponent {
     private serviceCordinates: CityCordinatesService,
     private serviceWeather: WeatherService
   ) {}
+  suggestions: CitySuggestion[] = [];
   city: string = '';
   lat!: string;
   lon!: string;
   ngOnInit() {
-    this.getCitySuggestions('rio de janeiro');
     /* this.searchCordinatesCity(this.city); */
   }
+  onCitySelected(suggestion: CitySuggestion) {
+    console.log('Cidade selecionada:', suggestion.name);
+    this.city = suggestion.name;
+    this.suggestions = [];
+    this.changeCity();
+  }
+
+  onCityInputChange() {
+    if (this.city.length > 4) {
+      this.serviceCordinates.getCitySuggestions(this.city).subscribe({
+        next: (citys: CitySuggestion[]) => {
+          console.log(citys);
+          this.suggestions = citys;
+        },
+        error: (err: any) => {
+          console.error('Erro ao buscar sugestões de cidade:', err);
+        },
+      });
+    } else {
+      this.suggestions = [];
+    }
+  }
+
   getCitySuggestions(name: string) {
     this.serviceCordinates.getCitySuggestions('rio de janeiro').subscribe({
       next: (data) => console.log(data),
     });
   }
+
   changeCity(): void {
-    // A variável pode ser modificada conforme necessidade
-    this.city; // Atualiza o valor da cidade no campo de input
-    this.searchCordinatesCity(this.city); // Chama a função para buscar coordenadas
+    this.city;
+    this.searchCordinatesCity(this.city);
   }
 
   searchWeather(lat: string, lon: string) {
@@ -55,6 +80,8 @@ export class AppComponent {
         this.lat = city.lat;
         this.lon = city.lon;
         this.searchWeather(city.lat, city.lon);
+        this.city = '';
+        this.suggestions = [];
         // chamar o metodo que busca a previsão e marca o mapa
 
         if (!city) {

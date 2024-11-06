@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import L, { latLng, tileLayer, marker, Marker, Icon } from 'leaflet';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ export class MapService {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(this.map);
-
+    this.addCloudsLayer();
     // Definindo o ícone do marcador diretamente ao criar o marcador
     const icon = L.icon({
       iconUrl: 'assets/marker-icon.png', // Caminho para o ícone
@@ -46,5 +47,16 @@ export class MapService {
       this.marker.setLatLng([lat, lon]); // Atualiza a posição do marcador
       this.marker.bindPopup(`Latitude: ${lat}, Longitude: ${lon}`).openPopup();
     }
+  }
+
+  addCloudsLayer(): void {
+    // Adicionando a camada de nuvens diretamente
+    const cloudLayerUrl = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${environment.OPENWEATHERMAP_API_KEY}`; // Substitua "YOUR_API_KEY" pela chave da sua API
+
+    tileLayer(cloudLayerUrl, {
+      attribution:
+        '&copy; <a href="https://openweathermap.org/city">OpenWeatherMap</a>',
+      maxZoom: 19,
+    }).addTo(this.map);
   }
 }
