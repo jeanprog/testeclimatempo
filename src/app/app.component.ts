@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { CityCordinatesService } from './_core/_services/CityCordinates.service';
 import { WeatherService } from './_core/_services/Weather.Service';
 import { Weather } from './_domain/_entities/weather.entity';
+import { City } from './_domain/_entities/City.entity';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,7 @@ export class AppComponent {
   ) {}
 
   ngOnInit() {
-    /* this.searchCordinatesCity('rio de janeiro'); já funciona*/
+    this.searchCordinatesCity('rio de janeiro');
     /*     this.searchWeather('-1.2043218', '-47.1583944'); */
   }
 
@@ -35,11 +36,12 @@ export class AppComponent {
 
   searchCordinatesCity(name: string) {
     this.serviceCordinates.getCityCoordinates(name).subscribe({
-      next: (result) => {
-        console.log(result, 'depois do sub');
+      next: (city: City) => {
+        console.log(city, 'depois do sub');
+        this.searchWeather(city.lat, city.lon);
         // chamar o metodo que busca a previsão e marca o mapa
 
-        if (!result) {
+        if (!city) {
           return console.log('error ao obter a lista');
         }
       },
