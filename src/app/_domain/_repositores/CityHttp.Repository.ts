@@ -1,7 +1,8 @@
 import { map, Observable } from 'rxjs';
 import { City } from '../_entities/City.entity';
+import { CitySuggestion } from '../_entities/CitySuggestion.entity';
 import CityGateway from '../_interfaces/CityGateway';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environment';
 
@@ -26,5 +27,25 @@ export class CityHttpRepository implements CityGateway {
           } as City;
         })
       );
+  }
+  getCitySuggestions(query: string): Observable<CitySuggestion[]> {
+    const params = new HttpParams()
+      .set('q', query)
+      .set('format', 'json')
+      .set('addressdetails', '1') // Inclui detalhes do endereço na resposta
+      .set('limit', '5'); // Limita o número de resultados
+
+    return this.http.get<any[]>(this.urlNominatim, { params }).pipe(
+      map((results: any[]) =>
+        results.map(
+          (item) =>
+            new CitySuggestion(
+              item.name, // Nome da cidade
+              item.address.state || 'N/A', // Estado com valor padrão
+              item.address.country // País
+            )
+        )
+      )
+    );
   }
 }

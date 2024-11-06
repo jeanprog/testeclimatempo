@@ -23,7 +23,13 @@ export class AppComponent {
   lat!: string;
   lon!: string;
   ngOnInit() {
+    this.getCitySuggestions('rio de janeiro');
     /* this.searchCordinatesCity(this.city); */
+  }
+  getCitySuggestions(name: string) {
+    this.serviceCordinates.getCitySuggestions('rio de janeiro').subscribe({
+      next: (data) => console.log(data),
+    });
   }
   changeCity(): void {
     // A variável pode ser modificada conforme necessidade
