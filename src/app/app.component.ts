@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(private serviceCordinates: CityCordinatesService) {}
 
   ngOnInit() {
-    this.searchCordinatesCity('rio de janeiro');
+    /* this.searchCordinatesCity('rio de janeiro'); já funciona*/
   }
   searchCordinatesCity(name: string) {
     this.serviceCordinates.getCityCoordinates(name).subscribe({
