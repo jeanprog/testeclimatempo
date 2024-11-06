@@ -4,11 +4,12 @@ import { CityCordinatesService } from './_core/_services/CityCordinates.service'
 import { WeatherService } from './_core/_services/Weather.Service';
 import { Weather } from './_domain/_entities/weather.entity';
 import { City } from './_domain/_entities/City.entity';
+import { MapComponent } from './_components/map/map.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MapComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -17,10 +18,10 @@ export class AppComponent {
     private serviceCordinates: CityCordinatesService,
     private serviceWeather: WeatherService
   ) {}
-
+  lat: string = '-1.2043218';
+  lon: string = '-74.0060';
   ngOnInit() {
-    this.searchCordinatesCity('rio de janeiro');
-    /*     this.searchWeather('-1.2043218', '-47.1583944'); */
+    /*     this.searchCordinatesCity('rio de janeiro'); */
   }
 
   searchWeather(lat: string, lon: string) {
