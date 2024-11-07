@@ -21,7 +21,7 @@
           >
           <p class="p-2 text-[12px]">mín °</p>
         </div>
-        <span class="font-bold"> 25°</span>
+        <span class="font-bold text-[12px]"> {{ tempMin }}°</span>
       </div>
       <div class="flex border-b-[2px] border-slate-600 justify-between">
         <div class="flex">
@@ -30,14 +30,14 @@
           >
           <p class="p-2 text-[12px]">máx°</p>
         </div>
-        <span class="font-bold"> 35° </span>
+        <span class="font-bold text-[12px]"> {{ tempMax }}° </span>
       </div>
       <div class="flex border-b-[2px] border-slate-600 justify-between">
         <div class="flex items-center">
           <span class="material-symbols-outlined text-2xl"> humidity_mid </span>
           <p class="p-2 text-[12px]">Umidade</p>
         </div>
-        <span class="font-bold"> 60 % </span>
+        <span class="font-bold text-[12px]">{{ humidity }}% </span>
       </div>
       <div
         class="flex border-b-[2px] border-slate-600 justify-between items-center"
@@ -48,12 +48,14 @@
           </span>
           <p class="p-2 text-[12px]">vento:</p>
         </div>
-        <span class="font-bold">15<span class="text-[8px]"> km/h</span></span>
+        <span class="font-bold text-[12px]"
+          >{{ windSpeed }}<span class="text-[8px]"> km/h</span></span
+        >
       </div>
     </div>
     <p class="text-white">
       Predominantemente
-      <span class="text-yellow-500 font-medium">Ensolarado</span>
+      <span class="text-yellow-500 font-medium">{{ description }}</span>
     </p>
   </div>
 </div>
