@@ -58,11 +58,13 @@ export class AppComponent {
   }
 
   onCityInputChange() {
+    this.isLoading === true;
     if (this.city.length > 4) {
       this.serviceCordinates.getCitySuggestions(this.city).subscribe({
         next: (citys: CitySuggestion[]) => {
           console.log(citys, 'ver saida aqui');
           this.suggestions = citys;
+          this.isLoading === false;
         },
         error: (err: any) => {
           console.error('Erro ao buscar sugestões de cidade:', err);
