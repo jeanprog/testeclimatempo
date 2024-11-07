@@ -56,8 +56,8 @@ export class MapService {
     tileLayer(cloudLayerUrl, {
       attribution:
         '&copy; <a href="https://openweathermap.org/city">OpenWeatherMap</a>',
-      maxZoom: 19,
-      opacity: 0.8,
+      maxZoom: 9,
+      opacity: 2,
     }).addTo(this.map);
   }
 }

@@ -4,18 +4,26 @@
       Veja o clima na sua cidade?
     </h1>
 
-    <input
-      [(ngModel)]="city"
-      placeholder="Cidade"
-      class="p-2 rounded bg-slate-800"
-      (input)="onCityInputChange()"
-    />
+    <div class="relative">
+      <input
+        [(ngModel)]="city"
+        placeholder="Cidade"
+        class="p-2 w-full rounded bg-slate-800 text-slate-200"
+        (input)="onCityInputChange()"
+      />
+      <span
+        class="material-symbols-outlined absolute right-2 top-1/2 transform -translate-y-1/2 text-slate-400"
+      >
+        search
+      </span>
+    </div>
+
     @if(this.suggestions.length > 0) {
     <ul class="text-white">
       <li
         *ngFor="let suggestion of suggestions"
         (click)="onCitySelected(suggestion)"
-        class="p-2"
+        class="p-2 border-b-[1px] border-white"
       >
         {{ suggestion.name }} - {{ suggestion.state }}, {{ suggestion.country }}
       </li>
@@ -32,6 +40,7 @@
       [humidity]="weatherData.humidity"
       [windSpeed]="weatherData.windSpeed"
       [description]="weatherData.description"
+      [temp]="weatherData.temp"
     >
     </cardweather>
     }

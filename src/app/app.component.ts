@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { CitySuggestion } from './_domain/_entities/CitySuggestion.entity';
 import { NgFor } from '@angular/common';
 import { CardweatherComponent } from './_components/cardweather/cardweather.component';
+import { convertWindSpeedToKmh } from './_utils/helpers';
 
 @Component({
   selector: 'app-root',
@@ -84,12 +85,13 @@ export class AppComponent {
           return console.log('error ao obter a lista');
         }
         this.weatherData = new Weather(
-          weather.temperature,
+          parseFloat(weather.temperature.toFixed(0)),
           weather.tempMin,
           weather.tempMax,
           weather.humidity,
-          weather.windSpeed,
-          weather.description
+          convertWindSpeedToKmh(weather.windSpeed),
+          weather.description,
+          weather.temp
         );
         console.log(this.weatherData);
       },
