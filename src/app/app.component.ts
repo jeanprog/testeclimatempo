@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { CityCordinatesService } from './_core/_services/CityCordinates.service';
 import { WeatherService } from './_core/_services/Weather.Service';
@@ -10,7 +10,9 @@ import { CitySuggestion } from './_domain/_entities/CitySuggestion.entity';
 import { NgFor } from '@angular/common';
 import { CardweatherComponent } from './_components/cardweather/cardweather.component';
 import { convertWindSpeedToKmh } from './_utils/helpers';
-
+import { FormControl } from '@angular/forms';
+import { debounceTime, Subject, switchMap, takeUntil } from 'rxjs';
+import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,21 +20,24 @@ import { convertWindSpeedToKmh } from './_utils/helpers';
     RouterOutlet,
     MapComponent,
     FormsModule,
+    ReactiveFormsModule,
     NgFor,
     CardweatherComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
   suggestions: CitySuggestion[] = [];
   weatherData!: Weather;
   city: string = '';
+  cityControl = new FormControl('');
   displayName: string = '';
   lat!: string;
   lon!: string;
   nameCity!: string;
   isLoading: boolean = false;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private serviceCordinates: CityCordinatesService,
@@ -47,7 +52,12 @@ export class AppComponent {
   /******  2cd60381-f69b-4e3e-aae5-569a15a36eef  *******/
   ngOnInit() {
     this.searchCordinatesCity('Ribeirão Preto');
+    this.onCityInputChange();
     /* this.searchCordinatesCity(this.city); */
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
   onCitySelected(suggestion: CitySuggestion) {
     console.log('Cidade selecionada:', suggestion.name);
@@ -57,7 +67,39 @@ export class AppComponent {
     this.changeCity();
   }
 
-  onCityInputChange() {
+  onCityInputChange(): void {
+    console.log('fez algo');
+    this.cityControl.valueChanges
+      .pipe(
+        debounceTime(300),
+        switchMap((value) => {
+          if (value && value.length > 4) {
+            this.isLoading = true;
+            return this.serviceCordinates.getCitySuggestions(value);
+          } else {
+            this.clearSuggestions();
+            return [];
+          }
+        }),
+        takeUntil(this.destroy$)
+      )
+      .subscribe({
+        next: (citys: CitySuggestion[]) => {
+          this.suggestions = citys;
+          this.isLoading = false;
+        },
+        error: (err: any) => {
+          console.error('Erro ao buscar sugestões de cidade:', err);
+          this.isLoading = false;
+        },
+      });
+  }
+  clearSuggestions(): void {
+    this.suggestions = [];
+    this.isLoading = false;
+  }
+
+  /* onCityInputChange(){
     this.isLoading === true;
     if (this.city.length > 4) {
       this.serviceCordinates.getCitySuggestions(this.city).subscribe({
@@ -75,7 +117,7 @@ export class AppComponent {
     }
   }
 
-  changeCity(): void {
+ */ changeCity(): void {
     this.displayName;
     this.searchCordinatesCity(this.displayName);
   }
