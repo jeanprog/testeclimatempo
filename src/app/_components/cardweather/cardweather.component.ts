@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'cardweather',
@@ -6,4 +6,11 @@ import { Component } from '@angular/core';
   imports: [],
   templateUrl: './cardweather.component.html',
 })
-export class CardweatherComponent {}
+export class CardweatherComponent {
+  @Input() temperature!: number;
+  @Input() tempMin!: number;
+  @Input() tempMax!: number;
+  @Input() humidity!: number;
+  @Input() windSpeed!: number;
+  @Input() description!: string;
+}

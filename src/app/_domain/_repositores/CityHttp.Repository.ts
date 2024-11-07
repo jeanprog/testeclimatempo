@@ -42,7 +42,8 @@ export class CityHttpRepository implements CityGateway {
             new CitySuggestion(
               item.name, // Nome da cidade
               item.address.state || 'N/A', // Estado com valor padrão
-              item.address.country // País
+              item.address.country,
+              item.display_name // País
             )
         )
       )

@@ -13,11 +13,8 @@ export class CityCordinatesService implements CityGateway {
   getCityCoordinates(name: string): Observable<City> {
     return this.repositoryCity.getCityCoordinates(name).pipe(
       map((city: City) => {
-        if (city.name.toLowerCase() !== name.toLowerCase()) {
-          throw new Error(
-            'O nome da cidade não corresponde ao retornado pela API'
-          );
-        }
+        console.log(city, 'entendendo saida da api');
+
         return city;
       }),
       catchError((error) => {

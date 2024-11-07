@@ -10,7 +10,7 @@ import { MapService } from '../../_core/_services/Maps.Service'; // Importando o
 export class MapComponent implements OnInit, OnChanges {
   @Input() lat: string = ''; // Coordenada de latitude
   @Input() lon: string = ''; // Coordenada de longitude
-
+  @Input() nameCity: string = '';
   constructor(private mapService: MapService) {}
 
   ngOnInit(): void {
@@ -22,7 +22,11 @@ export class MapComponent implements OnInit, OnChanges {
     // Se as coordenadas mudaram, atualize o mapa
     if (this.lat && this.lon) {
       console.log(this.lat, this.lon);
-      this.mapService.updateMap(parseFloat(this.lat), parseFloat(this.lon));
+      this.mapService.updateMap(
+        parseFloat(this.lat),
+        parseFloat(this.lon),
+        this.nameCity
+      );
     }
   }
 }

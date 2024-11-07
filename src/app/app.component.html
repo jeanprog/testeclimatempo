@@ -11,10 +11,11 @@
       (input)="onCityInputChange()"
     />
     @if(this.suggestions.length > 0) {
-    <ul class="suggestions-list">
+    <ul class="text-white">
       <li
         *ngFor="let suggestion of suggestions"
         (click)="onCitySelected(suggestion)"
+        class="p-2"
       >
         {{ suggestion.name }} - {{ suggestion.state }}, {{ suggestion.country }}
       </li>
@@ -23,9 +24,19 @@
     <!-- <button (click)="changeCity()" class="bg-blue-500 text-white p-2 rounded">
       Buscar
     </button> -->
-    <cardweather></cardweather>
+    @if(weatherData) {
+    <cardweather
+      [temperature]="weatherData.temperature"
+      [tempMin]="weatherData.tempMin"
+      [tempMax]="weatherData.tempMax"
+      [humidity]="weatherData.humidity"
+      [windSpeed]="weatherData.windSpeed"
+      [description]="weatherData.description"
+    >
+    </cardweather>
+    }
 
     <!-- Componente de Mapa -->
-    <app-map [lat]="lat" [lon]="lon"></app-map>
+    <app-map [lat]="lat" [lon]="lon" [nameCity]="nameCity"></app-map>
   </div>
 </body>

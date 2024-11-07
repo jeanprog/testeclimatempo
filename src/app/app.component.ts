@@ -24,20 +24,34 @@ import { CardweatherComponent } from './_components/cardweather/cardweather.comp
   styleUrl: './app.component.css',
 })
 export class AppComponent {
+  suggestions: CitySuggestion[] = [];
+  weatherData!: Weather;
+  city: string = '';
+  displayName: string = '';
+  lat!: string;
+  lon!: string;
+  nameCity!: string;
+  isLoading: boolean = false;
+
   constructor(
     private serviceCordinates: CityCordinatesService,
     private serviceWeather: WeatherService
   ) {}
-  suggestions: CitySuggestion[] = [];
-  city: string = '';
-  lat!: string;
-  lon!: string;
+
+  /*************  ✨ Codeium Command ⭐  *************/
+  /**
+   * Called when the component is initialized.
+   * Calls the searchCordinatesCity method with the initial city value.
+   */
+  /******  2cd60381-f69b-4e3e-aae5-569a15a36eef  *******/
   ngOnInit() {
+    this.searchCordinatesCity('Ribeirão Preto');
     /* this.searchCordinatesCity(this.city); */
   }
   onCitySelected(suggestion: CitySuggestion) {
     console.log('Cidade selecionada:', suggestion.name);
     this.city = suggestion.name;
+    this.displayName = suggestion.displayName;
     this.suggestions = [];
     this.changeCity();
   }
@@ -46,7 +60,7 @@ export class AppComponent {
     if (this.city.length > 4) {
       this.serviceCordinates.getCitySuggestions(this.city).subscribe({
         next: (citys: CitySuggestion[]) => {
-          console.log(citys);
+          console.log(citys, 'ver saida aqui');
           this.suggestions = citys;
         },
         error: (err: any) => {
@@ -58,40 +72,46 @@ export class AppComponent {
     }
   }
 
-  getCitySuggestions(name: string) {
-    this.serviceCordinates.getCitySuggestions('rio de janeiro').subscribe({
-      next: (data) => console.log(data),
-    });
-  }
-
   changeCity(): void {
-    this.city;
-    this.searchCordinatesCity(this.city);
+    this.displayName;
+    this.searchCordinatesCity(this.displayName);
   }
 
   searchWeather(lat: string, lon: string) {
     this.serviceWeather.getWeather(lat, lon).subscribe({
       next: (weather: Weather) => {
-        console.log(weather);
         if (!weather) {
           return console.log('error ao obter a lista');
         }
+        this.weatherData = new Weather(
+          weather.temperature,
+          weather.tempMin,
+          weather.tempMax,
+          weather.humidity,
+          weather.windSpeed,
+          weather.description
+        );
+        console.log(this.weatherData);
       },
     });
   }
 
-  searchCordinatesCity(name: string) {
-    this.serviceCordinates.getCityCoordinates(name).subscribe({
-      next: (city: City) => {
-        console.log(city, 'depois do sub');
-        this.lat = city.lat;
-        this.lon = city.lon;
-        this.searchWeather(city.lat, city.lon);
+  searchCordinatesCity(cityName: string) {
+    console.log(cityName, 'antes do sub');
+    this.isLoading = true;
+    this.serviceCordinates.getCityCoordinates(cityName).subscribe({
+      next: (dataCity: City) => {
+        console.log(dataCity, 'depois do sub');
+        this.lat = dataCity.lat;
+        this.lon = dataCity.lon;
+        this.nameCity = dataCity.name;
+        this.searchWeather(dataCity.lat, dataCity.lon);
         this.city = '';
         this.suggestions = [];
+        this.isLoading = false;
         // chamar o metodo que busca a previsão e marca o mapa
 
-        if (!city) {
+        if (!dataCity) {
           return console.log('error ao obter a lista');
         }
       },

@@ -37,7 +37,7 @@ export class MapService {
       .openPopup();
   }
 
-  updateMap(lat: number, lon: number): void {
+  updateMap(lat: number, lon: number, name: string): void {
     console.log(lat, lon, 'teste no update');
     if (this.map) {
       this.map.setView([lat, lon], 13); // Atualiza a visualização do mapa
@@ -45,7 +45,7 @@ export class MapService {
 
     if (this.marker) {
       this.marker.setLatLng([lat, lon]); // Atualiza a posição do marcador
-      this.marker.bindPopup(`Latitude: ${lat}, Longitude: ${lon}`).openPopup();
+      this.marker.bindPopup(`${name}`).openPopup();
     }
   }
 
