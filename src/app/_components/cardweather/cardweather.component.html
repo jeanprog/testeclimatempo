@@ -22,34 +22,40 @@
             class="material-symbols-outlined text-4xl mr-2 animate-wiggle-more"
             >thermostat</span
           >
-          <p class="p-2 text-[12px]">mín °</p>
+          <p class="p-2 text-[12px] md:text-[18px]">mín °</p>
         </div>
-        <span class="font-bold text-[12px]"> {{ tempMin }}°</span>
+        <span class="font-bold text-[12px] md:text-[24px]">
+          {{ tempMin }}°</span
+        >
       </div>
       <div class="flex border-b-[2px] border-slate-600 justify-between">
         <div class="flex">
           <span class="material-symbols-outlined text-4xl mr-2 animate-rotate-x"
             >thermostat</span
           >
-          <p class="p-2 text-[12px]">máx°</p>
+          <p class="p-2 text-[12px] md:text-[18px]">máx°</p>
         </div>
-        <span class="font-bold text-[12px]"> {{ tempMax }}° </span>
+        <span class="font-bold text-[12px] md:text-[24px]">
+          {{ tempMax }}°
+        </span>
       </div>
       <div class="flex border-b-[2px] border-slate-600 justify-between">
         <div class="flex items-center">
           <span class="material-symbols-outlined text-2xl"> humidity_mid </span>
-          <p class="p-2 text-[12px]">Umidade</p>
+          <p class="p-2 text-[12px] md:text-[18px]">Umidade</p>
         </div>
-        <span class="font-bold text-[12px]">{{ humidity }}% </span>
+        <span class="font-bold text-[12px] md:text-[24px]"
+          >{{ humidity }}%
+        </span>
       </div>
       <div
         class="flex border-b-[2px] border-slate-600 justify-between items-center"
       >
         <div class="flex items-center">
-          <span class="material-symbols-outlined animate-bounce"> air </span>
-          <p class="p-2 text-[12px]">vento:</p>
+          <span class="material-symbols-outlined animate-shake"> air </span>
+          <p class="p-2 text-[12px] md:text-[18px]">vento:</p>
         </div>
-        <span class="font-bold text-[12px]"
+        <span class="font-bold text-[12px] md:text-[24px]"
           >{{ windSpeed }}<span class="text-[8px]"> km/h</span></span
         >
       </div>

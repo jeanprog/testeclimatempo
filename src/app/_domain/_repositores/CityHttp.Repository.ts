@@ -32,21 +32,23 @@ export class CityHttpRepository implements CityGateway {
     const params = new HttpParams()
       .set('q', query)
       .set('format', 'json')
-      .set('addressdetails', '1') // Inclui detalhes do endereço na resposta
-      .set('limit', '5'); // Limita o número de resultados
+      .set('addressdetails', '1')
+      .set('limit', '5');
 
-    return this.http.get<any[]>(this.urlNominatim, { params }).pipe(
-      map((results: any[]) =>
-        results.map(
-          (item) =>
-            new CitySuggestion(
-              item.name, // Nome da cidade
-              item.address.state || 'N/A', // Estado com valor padrão
-              item.address.country,
-              item.display_name // País
-            )
+    return this.http
+      .get<any[]>(this.urlNominatim, { params })
+      .pipe(
+        map((results: any[]) =>
+          results.map(
+            (item) =>
+              new CitySuggestion(
+                item.name,
+                item.address.state || 'N/A',
+                item.address.country,
+                item.display_name
+              )
+          )
         )
-      )
-    );
+      );
   }
 }

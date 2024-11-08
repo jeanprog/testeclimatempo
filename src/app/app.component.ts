@@ -13,6 +13,8 @@ import { convertWindSpeedToKmh } from './_utils/helpers';
 import { FormControl } from '@angular/forms';
 import { debounceTime, Subject, switchMap, takeUntil } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastService } from './_core/_services/Toast.service';
+import { ToastErrorComponent } from './_components/toast-error/toast-error.component';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -23,6 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     NgFor,
     CardweatherComponent,
+    ToastErrorComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -37,23 +40,28 @@ export class AppComponent implements OnDestroy {
   lon!: string;
   nameCity!: string;
   isLoading: boolean = false;
+  showErrorToast: boolean = false;
+  errorMessage: string = '';
   private destroy$ = new Subject<void>();
 
   constructor(
     private serviceCordinates: CityCordinatesService,
-    private serviceWeather: WeatherService
+    private serviceWeather: WeatherService,
+    private toastService: ToastService
   ) {}
 
-  /*************  ✨ Codeium Command ⭐  *************/
-  /**
-   * Called when the component is initialized.
-   * Calls the searchCordinatesCity method with the initial city value.
-   */
-  /******  2cd60381-f69b-4e3e-aae5-569a15a36eef  *******/
   ngOnInit() {
     this.searchCordinatesCity('Ribeirão Preto');
     this.onCityInputChange();
-    /* this.searchCordinatesCity(this.city); */
+    this.observerStateToast();
+  }
+  observerStateToast() {
+    this.toastService.showToast$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (toastState) => {
+        this.showErrorToast = toastState.show;
+        this.errorMessage = toastState.message;
+      },
+    });
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -73,7 +81,7 @@ export class AppComponent implements OnDestroy {
       .pipe(
         debounceTime(300),
         switchMap((value) => {
-          if (value && value.length > 4) {
+          if (value && value.length > 3) {
             this.isLoading = true;
             return this.serviceCordinates.getCitySuggestions(value);
           } else {
@@ -87,6 +95,9 @@ export class AppComponent implements OnDestroy {
         next: (citys: CitySuggestion[]) => {
           this.suggestions = citys;
           this.isLoading = false;
+          if (citys.length === 0) {
+            this.handleError('não encontramos sugestões de cidades a cidade');
+          }
         },
         error: (err: any) => {
           console.error('Erro ao buscar sugestões de cidade:', err);
@@ -163,6 +174,8 @@ export class AppComponent implements OnDestroy {
       },
     });
   }
-
-  title = 'spaclimatempo';
+  handleError(message: string) {
+    console.log('chamou handle');
+    this.toastService.showError(message);
+  }
 }

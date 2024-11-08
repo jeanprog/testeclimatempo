@@ -8,19 +8,20 @@ export class ToastService {
   private showToastSubject = new BehaviorSubject<{
     show: boolean;
     message: string;
-  }>({ show: false, message: '' });
+  }>({
+    show: false,
+    message: '',
+  });
 
-  // por baixo dos panos showToastSubject.asObservable(),
-  get showToast$() {
-    return this.showToastSubject.asObservable();
-  }
+  readonly showToast$ = this.showToastSubject.asObservable(); // Tornar público apenas o Observable
 
   showError(message: string) {
+    console.log('ToastService: Erro exibido', message);
     this.showToastSubject.next({ show: true, message });
-    setTimeout(() => this.hideToast(), 6000);
+    setTimeout(() => this.hideToast(), 4000); // Timeout reduzido para 4s conforme preferências
   }
 
-  hideToast() {
+  private hideToast() {
     this.showToastSubject.next({ show: false, message: '' });
   }
 }
