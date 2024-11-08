@@ -6,15 +6,13 @@ import { CityHttpRepository } from '../../_domain/_repositores/CityHttp.Reposito
 import { Injectable } from '@angular/core';
 import { CitySuggestion } from '../../_domain/_entities/CitySuggestion.entity';
 @Injectable({
-  providedIn: 'root', // Registra automaticamente no root
+  providedIn: 'root',
 })
 export class CityCordinatesService implements CityGateway {
   constructor(private repositoryCity: CityHttpRepository) {}
   getCityCoordinates(name: string): Observable<City> {
     return this.repositoryCity.getCityCoordinates(name).pipe(
       map((city: City) => {
-        console.log(city, 'entendendo saida da api');
-
         return city;
       }),
       catchError((error) => {

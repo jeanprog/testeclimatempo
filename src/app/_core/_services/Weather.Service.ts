@@ -5,7 +5,7 @@ import { Weather } from '../../_domain/_entities/weather.entity';
 import WeatherGateway from '../../_domain/_interfaces/WeatherGateway';
 import { WeatherHttpRepository } from '../../_domain/_repositores/WeatherHttp.Repository';
 @Injectable({
-  providedIn: 'root', // Registra automaticamente no root
+  providedIn: 'root',
 })
 export class WeatherService implements WeatherGateway {
   constructor(private repositoryWeather: WeatherHttpRepository) {}

@@ -30,42 +30,42 @@ export class CardweatherComponent {
   iconMoment() {
     switch (this.temp) {
       case 'Clear':
-        this.icontype = 'brightness_7'; // Ícone para "Clear"
+        this.icontype = 'brightness_7';
         break;
 
       case 'Clouds':
-        this.icontype = 'cloud'; // Ícone para "Clouds"
+        this.icontype = 'cloud';
         break;
 
       case 'Rain':
-        this.icontype = 'rainy_snow'; // Ícone para "Rain"
+        this.icontype = 'rainy_snow';
         break;
 
       case 'Thunderstorm':
-        this.icontype = 'thunderstorm'; // Ícone para "Thunderstorm"
+        this.icontype = 'thunderstorm';
         break;
 
       default:
-        this.icontype = 'looks'; // Ícone para clima desconhecido
+        this.icontype = 'looks';
         break;
     }
   }
   updateIconColor() {
     switch (this.temp) {
       case 'Clear':
-        this.iconColor = 'text-yellow-500'; // Sol
+        this.iconColor = 'text-yellow-500';
         break;
       case 'Clouds':
-        this.iconColor = 'text-gray-500'; // Nublado
+        this.iconColor = 'text-gray-500';
         break;
       case 'Rain':
-        this.iconColor = 'text-slate-400'; // Chuva
+        this.iconColor = 'text-slate-400';
         break;
       case 'Thunderstorm':
-        this.iconColor = 'text-slate-500'; // Tempestade
+        this.iconColor = 'text-slate-500';
         break;
       default:
-        this.iconColor = 'text-slate-500'; // Clima desconhecido
+        this.iconColor = 'text-slate-500';
         break;
     }
   }

@@ -68,7 +68,6 @@ export class AppComponent implements OnDestroy {
     this.destroy$.complete();
   }
   onCitySelected(suggestion: CitySuggestion) {
-    console.log('Cidade selecionada:', suggestion.name);
     this.city = suggestion.name;
     this.displayName = suggestion.displayName;
     this.suggestions = [];
@@ -76,7 +75,6 @@ export class AppComponent implements OnDestroy {
   }
 
   onCityInputChange(): void {
-    console.log('fez algo');
     this.cityControl.valueChanges
       .pipe(
         debounceTime(300),
@@ -137,11 +135,9 @@ export class AppComponent implements OnDestroy {
   }
 
   searchCordinatesCity(cityName: string) {
-    console.log(cityName, 'antes do sub');
     this.isLoading = true;
     this.serviceCordinates.getCityCoordinates(cityName).subscribe({
       next: (dataCity: City) => {
-        console.log(dataCity, 'depois do sub');
         this.lat = dataCity.lat;
         this.lon = dataCity.lon;
         this.nameCity = dataCity.name;
@@ -149,7 +145,6 @@ export class AppComponent implements OnDestroy {
         this.city = '';
         this.suggestions = [];
         this.isLoading = false;
-        // chamar o metodo que busca a previsão e marca o mapa
 
         if (!dataCity) {
           return console.log('error ao obter a lista');

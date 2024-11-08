@@ -51,7 +51,7 @@ export class MapService {
 
   addCloudsLayer(): void {
     // Adicionando a camada de nuvens diretamente
-    const cloudLayerUrl = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${environment.OPENWEATHERMAP_API_KEY}`; // Substitua "YOUR_API_KEY" pela chave da sua API
+    const cloudLayerUrl = `https://tile.openweathermap.org/map/clouds_new/{z}/{x}/{y}.png?appid=${environment.OPENWEATHERMAP_API_KEY}`;
 
     tileLayer(cloudLayerUrl, {
       attribution:

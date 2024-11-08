@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
-import { MapService } from '../../_core/_services/Maps.Service'; // Importando o serviço
-
+import { MapService } from '../../_core/_services/Maps.Service';
 @Component({
   selector: 'app-map',
   standalone: true,
@@ -8,13 +7,13 @@ import { MapService } from '../../_core/_services/Maps.Service'; // Importando o
   templateUrl: './map.component.html',
 })
 export class MapComponent implements OnInit, OnChanges {
-  @Input() lat: string = ''; // Coordenada de latitude
-  @Input() lon: string = ''; // Coordenada de longitude
+  @Input() lat: string = '';
+  @Input() lon: string = '';
   @Input() nameCity: string = '';
   constructor(private mapService: MapService) {}
 
   ngOnInit(): void {
-    // Inicializa o mapa com coordenadas padrão (0, 0)
+    // só pra dar uma padrão inicial mas poderia ser a localização atual.
     this.mapService.initMap(-23.5489, -46.6388, 'map');
   }
 
