@@ -110,26 +110,7 @@ export class AppComponent implements OnDestroy {
     this.suggestions = [];
     this.isLoading = false;
   }
-
-  /* onCityInputChange(){
-    this.isLoading === true;
-    if (this.city.length > 4) {
-      this.serviceCordinates.getCitySuggestions(this.city).subscribe({
-        next: (citys: CitySuggestion[]) => {
-          console.log(citys, 'ver saida aqui');
-          this.suggestions = citys;
-          this.isLoading === false;
-        },
-        error: (err: any) => {
-          console.error('Erro ao buscar sugestões de cidade:', err);
-        },
-      });
-    } else {
-      this.suggestions = [];
-    }
-  }
-
- */ changeCity(): void {
+  changeCity(): void {
     this.displayName;
     this.cityControl.reset();
     this.searchCordinatesCity(this.displayName);
