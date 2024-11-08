@@ -18,7 +18,7 @@ export class ToastService {
   showError(message: string) {
     console.log('ToastService: Erro exibido', message);
     this.showToastSubject.next({ show: true, message });
-    setTimeout(() => this.hideToast(), 4000); // Timeout reduzido para 4s conforme preferências
+    setTimeout(() => this.hideToast(), 3000); // Timeout reduzido para 4s conforme preferências
   }
 
   private hideToast() {

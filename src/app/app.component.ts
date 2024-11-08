@@ -95,8 +95,9 @@ export class AppComponent implements OnDestroy {
         next: (citys: CitySuggestion[]) => {
           this.suggestions = citys;
           this.isLoading = false;
+
           if (citys.length === 0) {
-            this.handleError('não encontramos sugestões de cidades a cidade');
+            this.handleError('não encontramos sugestões de cidades ');
           }
         },
         error: (err: any) => {
@@ -130,6 +131,7 @@ export class AppComponent implements OnDestroy {
 
  */ changeCity(): void {
     this.displayName;
+    this.cityControl.reset();
     this.searchCordinatesCity(this.displayName);
   }
 
