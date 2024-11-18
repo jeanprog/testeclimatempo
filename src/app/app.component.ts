@@ -28,7 +28,6 @@ import { ToastErrorComponent } from './_components/toast-error/toast-error.compo
     ToastErrorComponent,
   ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnDestroy {
   suggestions: CitySuggestion[] = [];

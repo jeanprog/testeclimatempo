@@ -16,7 +16,7 @@ export class ToastService {
   readonly showToast$ = this.showToastSubject.asObservable(); // Tornar público apenas o Observable
 
   showError(message: string) {
-    console.log('ToastService: Erro exibido', message);
+   
     this.showToastSubject.next({ show: true, message });
     setTimeout(() => this.hideToast(), 3000);
   }
